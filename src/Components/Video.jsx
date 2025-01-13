@@ -12,7 +12,7 @@ const Video = ({ thumbnail, title, views, id, avatar, channel_name, createdAt })
             <Link to={`/video/:${id}`}>
                 <div className='w-[22rem]'>
                     <div className='flex'>
-                        <img src={thumbnail} alt="thumbnail" className=' w-[22rem] h-[12rem] object-cover cursor-pointer rounded-[15px]' />
+                        <img src={thumbnail} alt="thumbnail" className='w-[22rem] h-[12rem] object-cover cursor-pointer rounded-[15px]' />
                     </div>
                     <div className='flex mt-2 items-start gap-2'>
                         <div className='w-[3rem]'>

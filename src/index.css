@@ -7,3 +7,7 @@
 .bg-overlay{
     background-color: rgba(0, 0, 0, 0.3);
 }
+
+.black-overlay{
+    background-color: rgba(0, 0, 0, 0.1);
+}

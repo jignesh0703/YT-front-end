@@ -13,6 +13,7 @@ import { Oval } from 'react-loader-spinner';  // Named import for the component
 import Options from '../Components/Options'
 import Message from '../Components/Message';
 import PlayList from '../Components/PlayList';
+import Create_Playlist from '../Components/Create_Playlist';
 
 const Video = () => {
 
@@ -183,6 +184,9 @@ const Video = () => {
 
   const [DisLikeColorHandle, setDisLikeColorHandle] = useState(false)
 
+  const [sawplaylist, setsawplaylist] = useState(false)
+  const [sawcreateplaylist, setsawcreateplaylist] = useState(false)
+
   return (
     <>
       {isLoading && (
@@ -236,7 +240,7 @@ const Video = () => {
                       <FaThumbsDown className={`${DisLikeColorHandle ? 'text-black' : 'text-zinc-500 '}`} />
                     </div>
                   </div>
-                  <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-4 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer'>
+                  <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-4 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer' onClick={() => setsawplaylist(true)}>
                     <FaBookmark className='text-zinc-500' />
                     <h1>Save</h1>
                   </div>
@@ -284,7 +288,12 @@ const Video = () => {
         )}
       </div>
       <Message />
-      <PlayList />
+      {
+        sawplaylist ? <PlayList setsawplaylist={setsawplaylist} setsawcreateplaylist={setsawcreateplaylist}/> : <></>
+      }
+      {
+        sawcreateplaylist ? <Create_Playlist setsawcreateplaylist={setsawcreateplaylist}/> : <></>
+      }
     </>
   );
 
