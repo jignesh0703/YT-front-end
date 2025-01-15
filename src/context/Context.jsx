@@ -8,7 +8,7 @@ const Context = (props) => {
     const [isLoggedin, setisLoggedin] = useState(false)
     const [data, setdata] = useState(null)
 
-    const URL = 'http://localhost:3000'
+    const URL = 'https://mern-streaming-website.vercel.app/'
 
     const checkLogin = useCallback(async () => {
         try {
