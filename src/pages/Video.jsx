@@ -171,6 +171,10 @@ const Video = () => {
   }, [id, URL, refreshLikes])
 
   const ToggleLike = async () => {
+    if (!isLoggedin) {
+      toast.error('Login is Required')
+      return;
+    }
     try {
       await axios.post(`${URL}/api/like/addliketovideo/${id}`, {}, {
         withCredentials: true
@@ -187,6 +191,66 @@ const Video = () => {
   const [sawplaylist, setsawplaylist] = useState(false)
   const [sawcreateplaylist, setsawcreateplaylist] = useState(false)
 
+  const [Subscribe, setSubscribe] = useState(false)
+  const [SubscriberCount, setSubscriberCount] = useState(null)
+  const [tracksubsciber, settracksubsciber] = useState(false)
+
+  const SubscribeToggle = async () => {
+    try {
+      const responce = await axios.post(`${URL}/api/subscription/c/${Video.owner._id}`, {}, {
+        withCredentials: true
+      })
+      setSubscribe(responce.data.isSubscribed)
+      settracksubsciber(!tracksubsciber)
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('An unexpected error occurred. Please try again');
+      }
+    }
+  }
+
+  useEffect(() => {
+    const CheckIsSubscribed = async () => {
+      if (!isLoggedin || !Video?.owner?._id) {
+        return;
+      }
+      try {
+        const responce = await axios.get(`${URL}/api/subscription/check/${Video.owner._id}`, {
+          withCredentials: true
+        })
+        setSubscribe(responce.data.isSubscribed)
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error('An unexpected error occurred. Please try again...');
+        }
+      }
+    }
+    CheckIsSubscribed()
+  }, [isLoggedin, id, Video])
+
+  useEffect(() => {
+    const FetchSubsciber = async () => {
+      if (Video?.owner?._id)
+        try {
+          const responce = await axios.get(`${URL}/api/subscription/c/${Video.owner._id}`, {
+            withCredentials: false
+          })
+          setSubscriberCount(responce.data.subscriber.length)
+        } catch (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            toast.error(error.response.data.message);
+          } else {
+            toast.error('An unexpected error occurred. Please try again.');
+          }
+        }
+    }
+    FetchSubsciber()
+  }, [Video, tracksubsciber])
+
   return (
     <>
       {isLoading && (
@@ -199,100 +263,109 @@ const Video = () => {
         <div>
           <Options />
         </div>
-        {Video ? (
-          <>
-            <div className='ml-[10%]'>
-              {
-                Video.videolink && (
-                  <video width="100%" controls className='w-[55rem] h-[30rem]'>
-                    <source src={Video.videolink} type="video/mp4" />
-                    <source src={Video.videolink} type="video/webm" />
-                    <source src={Video.videolink} type="video/ogg" />
-                    Your browser does not support the video tag.
-                  </video>
-                )}
-              <h1 className='font-bold mt-2 text-[1.2rem] w-[55rem]'>{Video.title}</h1>
-              <div className={`flex ${CheckUser ? 'gap-[15rem]' : ' gap-[17rem]'}`}>
-                <div className='flex w-max gap-2 items-center py-1'>
-                  <Link to={`/channel/${Video.owner._id}`}>
-                    <div className='w-max flex'>
-                      <img src={Video.owner.avatar} alt="avatar" className='w-[2.5rem] h-[2.5rem] rounded-full object-cover' />
-                    </div>
-                  </Link>
-                  <div className='flex flex-col'>
+        <div className='flex flex-col'>
+          {Video ? (
+            <>
+              <div className='ml-[10%]'>
+                {
+                  Video.videolink && (
+                    <video width="100%" controls className='w-[55rem] h-[30rem]'>
+                      <source src={Video.videolink} type="video/mp4" />
+                      <source src={Video.videolink} type="video/webm" />
+                      <source src={Video.videolink} type="video/ogg" />
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                <h1 className='font-bold mt-2 text-[1.2rem] w-[55rem]'>{Video.title}</h1>
+                <div className={`flex ${CheckUser ? 'gap-[15rem]' : ' gap-[17rem]'}`}>
+                  <div className='flex w-max gap-2 items-center py-1'>
                     <Link to={`/channel/${Video.owner._id}`}>
-                      <h1 className='text-[0.9rem] font-bold'>{Video.owner.channel_name}</h1>
+                      <div className='w-max flex'>
+                        <img src={Video.owner.avatar} alt="avatar" className='w-[2.5rem] h-[2.5rem] rounded-full object-cover' />
+                      </div>
                     </Link>
-                    <h1 className='text-[0.8rem] font-medium -mt-1'>1k subscribers</h1>
-                  </div>
-                  <div className='ml-6'>
-                    <button className='bg-black text-white py-2 px-6 text-[0.8rem] rounded-[20px] font-bold'>Subscribe</button>
-                  </div>
-                </div>
-                <div className='flex items-center justify-center text-center gap-3'>
-                  <div className='bg-gray-300 flex items-center rounded-full overflow-hidden'>
-                    <div className='flex items-center gap-1 hover:bg-gray-400 py-2 px-4 cursor-pointer duration-300 transition' onClick={ToggleLike}>
-                      <FaThumbsUp className={`${LikeColorHandle ? 'text-black' : 'text-zinc-500 '}`} />
-                      <h1>{likecount}</h1>
+                    <div className='flex flex-col'>
+                      <Link to={`/channel/${Video.owner._id}`}>
+                        <h1 className='text-[0.9rem] font-bold'>{Video.owner.channel_name}</h1>
+                      </Link>
+                      <h1 className='text-[0.8rem] font-medium -mt-1'>{SubscriberCount} subscribers</h1>
                     </div>
-                    <hr className='w-[1px] h-[25px] bg-gray-800 rounded-full' />
-                    <div className='hover:bg-gray-400 py-3 px-4 cursor-pointer duration-300 transition' onClick={() => setDisLikeColorHandle(!DisLikeColorHandle)}>
-                      <FaThumbsDown className={`${DisLikeColorHandle ? 'text-black' : 'text-zinc-500 '}`} />
+                    <div className='ml-6'>
+                      <button className={`text-white py-2 px-6 text-[0.8rem] rounded-[20px] font-bold ${Subscribe ? 'bg-slate-600 font-semibold' : 'bg-black'}`} onClick={SubscribeToggle}>{isLoggedin && Subscribe ? 'Unsubscribed' : 'Subscribed'}</button>
                     </div>
                   </div>
-                  <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-4 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer' onClick={() => setsawplaylist(true)}>
-                    <FaBookmark className='text-zinc-500' />
-                    <h1>Save</h1>
-                  </div>
-                  <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-4 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer' onClick={ShareHandler}>
-                    <FaShareAlt className='text-zinc-500' />
-                    <h1>Share</h1>
-                  </div>
-                  {
-                    CheckUser
-                      ? <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-2 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer' onClick={() => setsawoption(true)}>
-                        <HiOutlineDotsVertical className='text-[1.2rem] text-zinc-500' />
+                  <div className='flex items-center justify-center text-center gap-3'>
+                    <div className='bg-gray-300 flex items-center rounded-full overflow-hidden'>
+                      <div className='flex items-center gap-1 hover:bg-gray-400 py-2 px-4 cursor-pointer duration-300 transition' onClick={ToggleLike}>
+                        <FaThumbsUp className={`${LikeColorHandle ? 'text-black' : 'text-zinc-500 '}`} />
+                        <h1>{likecount}</h1>
                       </div>
-                      : <></>
-                  }
-                  {
-                    sawoption
-                      ? <div ref={dropdownRef} className='absolute bg-white ml-[14rem] mt-[5rem] shadow-lg'>
-                        <h1 className='cursor-pointer p-1 hover:bg-gray-200 duration-300 font-semibold' onClick={DeleteVideo}>Delete Video</h1>
-                        <hr className='w-[8rem] h-[2px] bg-black' />
-                        <Link to={`/updatevideo/${id}`}>
-                          <h1 className='cursor-pointer p-1 hover:bg-gray-200 duration-300 font-semibold'>Manage Video</h1>
-                        </Link>
+                      <hr className='w-[1px] h-[25px] bg-gray-800 rounded-full' />
+                      <div className='hover:bg-gray-400 py-3 px-4 cursor-pointer duration-300 transition' onClick={() => setDisLikeColorHandle(!DisLikeColorHandle)}>
+                        <FaThumbsDown className={`${DisLikeColorHandle ? 'text-black' : 'text-zinc-500 '}`} />
                       </div>
-                      : <></>
-                  }
+                    </div>
+                    <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-4 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer'
+                      onClick={() => {
+                        if (!isLoggedin) {
+                          toast.error('Login is Required')
+                        } else {
+                          setsawplaylist(true)
+                        }
+                      }}>
+                      <FaBookmark className='text-zinc-500' />
+                      <h1>Save</h1>
+                    </div>
+                    <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-4 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer' onClick={ShareHandler}>
+                      <FaShareAlt className='text-zinc-500' />
+                      <h1>Share</h1>
+                    </div>
+                    {
+                      CheckUser
+                        ? <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-2 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer' onClick={() => setsawoption(true)}>
+                          <HiOutlineDotsVertical className='text-[1.2rem] text-zinc-500' />
+                        </div>
+                        : <></>
+                    }
+                    {
+                      sawoption
+                        ? <div ref={dropdownRef} className='absolute bg-white ml-[14rem] mt-[5rem] shadow-lg'>
+                          <h1 className='cursor-pointer p-1 hover:bg-gray-200 duration-300 font-semibold' onClick={DeleteVideo}>Delete Video</h1>
+                          <hr className='w-[8rem] h-[2px] bg-black' />
+                          <Link to={`/updatevideo/${id}`}>
+                            <h1 className='cursor-pointer p-1 hover:bg-gray-200 duration-300 font-semibold'>Manage Video</h1>
+                          </Link>
+                        </div>
+                        : <></>
+                    }
+                  </div>
+                </div>
+                <div className='flex flex-col border border-[#F2F2F2] shadow-md rounded-[5px] p-1 px-2 bg-[#F2F2F2] w-[55rem]'>
+                  <div className='flex font-semibold gap-2'>
+                    <h1 className='flex text-[0.8rem]'>{Video.views} views</h1>
+                    <h1 className='text-[0.8rem]'>{timeAgo}</h1>
+                  </div>
+                  <p className='max-w-[54rem] break-words whitespace-pre-line'>{descriptionToShow}</p>
+                  {!isExpanded && Video.desciption?.length > 100 && (
+                    <span className='cursor-pointer font-semibold' onClick={toggleDescription}>...more</span>
+                  )}
+                  {isExpanded && Video.desciption?.length > 100 && (
+                    <span className='cursor-pointer font-semibold' onClick={toggleDescription}>Show less</span>
+                  )}
                 </div>
               </div>
-              <div className='flex flex-col border border-[#F2F2F2] shadow-md rounded-[5px] p-1 px-2 bg-[#F2F2F2] w-[55rem]'>
-                <div className='flex font-semibold gap-2'>
-                  <h1 className='flex text-[0.8rem]'>{Video.views} views</h1>
-                  <h1 className='text-[0.8rem]'>{timeAgo}</h1>
-                </div>
-                <p className='max-w-[54rem] break-words whitespace-pre-line'>{descriptionToShow}</p>
-                {!isExpanded && Video.desciption?.length > 100 && (
-                  <span className='cursor-pointer font-semibold' onClick={toggleDescription}>...more</span>
-                )}
-                {isExpanded && Video.desciption?.length > 100 && (
-                  <span className='cursor-pointer font-semibold' onClick={toggleDescription}>Show less</span>
-                )}
-              </div>
-            </div>
-          </>
-        ) : (
-          <p className='w-full h-full justify-center flex items-center text-[2rem] font-bold mt-[4rem]'>Loading...</p>
-        )}
+            </>
+          ) : (
+            <p className='w-full h-full justify-center flex items-center text-[2rem] font-bold mt-[4rem]'>Loading...</p>
+          )}
+          <Message />
+        </div>
       </div>
-      <Message />
       {
-        sawplaylist ? <PlayList setsawplaylist={setsawplaylist} setsawcreateplaylist={setsawcreateplaylist}/> : <></>
+        sawplaylist ? <PlayList setsawplaylist={setsawplaylist} setsawcreateplaylist={setsawcreateplaylist} /> : <></>
       }
       {
-        sawcreateplaylist ? <Create_Playlist setsawcreateplaylist={setsawcreateplaylist}/> : <></>
+        sawcreateplaylist ? <Create_Playlist setsawcreateplaylist={setsawcreateplaylist} /> : <></>
       }
     </>
   );

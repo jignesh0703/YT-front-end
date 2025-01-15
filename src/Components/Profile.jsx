@@ -2,14 +2,22 @@ import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { StoreContext } from "../context/Context";
+import { toast } from 'react-toastify';
 
-const Profile = ({ id, coverimage, avatar, username, channel_name, isLoggedin }) => {
+const Profile = ({ id, coverimage, avatar, username, channel_name }) => {
 
-  const { URL } = useContext(StoreContext);
+  const { URL, isLoggedin } = useContext(StoreContext);
   const [Check, setCheck] = useState(null)
+  const [Subscribe, setSubscribe] = useState(false)
+  const [SubscriberCount, setSubscriberCount] = useState(null)
+  const [tracksubsciber, settracksubsciber] = useState(false)
+  const [CountUserVideos, setCountUserVideos] = useState(null)
 
   useEffect(() => {
     const CheckChannel = async () => {
+      if (!isLoggedin) {
+        return;
+      }
       try {
         const responce = await axios.get(`${URL}/api/user/checkchannel/${id}`, {
           withCredentials: true
@@ -20,7 +28,75 @@ const Profile = ({ id, coverimage, avatar, username, channel_name, isLoggedin })
       }
     }
     CheckChannel()
-  }, [id, URL])
+  }, [id, URL, isLoggedin])
+
+  const SubscribeToggle = async () => {
+    try {
+      const responce = await axios.post(`${URL}/api/subscription/c/${id}`, {}, {
+        withCredentials: true
+      })
+      settracksubsciber(!tracksubsciber)
+      setSubscribe(responce.data.isSubscribed)
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('An unexpected error occurred. Please try again.');
+      }
+    }
+  }
+
+  useEffect(() => {
+    const CheckIsSubscribed = async () => {
+      if (!isLoggedin) {
+        return;
+      }
+      try {
+        const responce = await axios.get(`${URL}/api/subscription/check/${id}`, {
+          withCredentials: true
+        })
+        setSubscribe(responce.data.isSubscribed)
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error('An unexpected error occurred. Please try again.');
+        }
+      }
+    }
+    CheckIsSubscribed()
+  }, [isLoggedin,id])
+
+  useEffect(() => {
+    const FetchSubsciber = async () => {
+      try {
+        const responce = await axios.get(`${URL}/api/subscription/c/${id}`, {
+          withCredentials: false
+        })
+        setSubscriberCount(responce.data.subscriber.length)
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error('An unexpected error occurred. Please try again.');
+        }
+      }
+    }
+    FetchSubsciber()
+  }, [tracksubsciber])
+
+  useEffect(() => {
+    const GetUserVidoes = async () => {
+      try {
+        const responce = await axios.get(`${URL}/api/video/getchannelvideos/${id}`, {
+          withCredentials: false
+        })
+        setCountUserVideos(responce.data.Videos.length)
+      } catch (error) {
+      }
+    }
+    GetUserVidoes()
+  }, [URL, id])
 
   return (
     <>
@@ -40,20 +116,10 @@ const Profile = ({ id, coverimage, avatar, username, channel_name, isLoggedin })
             <h1 className='text-[2rem] font-bold'>{channel_name}</h1>
             <h1 className='ml-1'>{username}</h1>
             <div className='flex items-start gap-1 w-max'>
-              <h1>12k Subscribers</h1>
+              <h1>{SubscriberCount} Subscribers</h1>
               <hr className='w-[5px] h-[5px] bg-gray-800 rounded-full mt-[5px]' />
-              <h1>120 Videos</h1>
+              <h1>{CountUserVideos} Videos</h1>
             </div>
-            {
-              isLoggedin ? <Link to="/update">
-              <div className='mt-2'>
-                <button className='bg-black text-white p-2 px-4 rounded-[20px] font-bold text-[0.8rem] hover:bg-[#454545] transition duration-200 border-none'>
-                  Update Profile
-                </button>
-              </div>
-            </Link>
-              : <></>
-            }
             {
               Check === 'true' ? <Link to="/update">
                 <div className='mt-2'>
@@ -66,7 +132,7 @@ const Profile = ({ id, coverimage, avatar, username, channel_name, isLoggedin })
             }
           </div>
           <div className='ml-[35rem] mt-[2rem]'>
-            <button className='bg-black text-white p-2 px-6 rounded-[20px] font-bold'>Subscribe</button>
+            <button className={`text-white p-2 px-6 rounded-[20px] font-bold ${Subscribe ? 'bg-slate-600' : 'bg-black'} `} onClick={SubscribeToggle}>{isLoggedin && Subscribe ? 'Unsubscribed' : 'Subscribed'}</button>
           </div>
         </div>
       </div>

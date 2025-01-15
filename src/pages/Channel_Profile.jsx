@@ -37,16 +37,16 @@ const Channel_Profile = () => {
       <Navbar />
       <div className='flex'>
         <Options />
-        <div className='flex justify-center mt-4 ml-[2rem]'>
+        <div className='flex  mt-4 ml-[2rem] flex-col items-center'>
           {
             ChannelData.map((item, index) => {
               return <Profile id={item._id} coverimage={item.coverimage} avatar={item.avatar} channel_name={item.channel_name} username={item.username} key={index} />
             })
           }
+          <div className='flex justify-center flex-wrap'>
+            <User_Vidoes />
+          </div>
         </div>
-      </div>
-      <div className='flex justify-center'>
-        <User_Vidoes id={ChannelData._id}/>
       </div>
     </>
   )

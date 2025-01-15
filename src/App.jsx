@@ -15,6 +15,7 @@ import YourVideo from './pages/YourVideo';
 import Playlist from './pages/Playlist';
 import Update_Video from './pages/Update_Video'
 import Playlist_Page from './pages/Playlist_Page';
+import Like from './pages/Like';
 
 const App = () => {
   return (
@@ -35,11 +36,12 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login-signup' element={<Signup_Login />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:id' element={<Profile />} />
           <Route path='/update' element={<Updata_Profile />} />
           <Route path='/updatepassword' element={<Update_Password />} />
           <Route path='/uploadvideo' element={<Upload_Video />} />
           <Route path='/video/:id' element={<Video />} />
+          <Route path='/like' element={<Like />} />
           <Route path='/channel/:id' element={<Channel_Profile />} />
           <Route path='/history' element={<History />} />
           <Route path='/playlist' element={<Playlist />} />

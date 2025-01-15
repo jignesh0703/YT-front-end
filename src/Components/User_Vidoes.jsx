@@ -16,32 +16,32 @@ const User_Vidoes = () => {
                 const responce = await axios.get(`${URL}/api/video/getchannelvideos/${id}`, {
                     withCredentials: false
                 })
-                setVideos(responce.data.Videos)
+                const sortedVideos = responce.data.Videos.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                setVideos(sortedVideos)
             } catch (error) {
-                console.log(error)
             }
         }
         GetUserVidoes()
     }, [URL, id])
 
     if (!Videos || Videos.length === 0) {
-        return  <>
-        <div className="flex flex-col">
-            <div className='flex justify-start w-[78rem] border-b-[1px] border-slate-400 pb-2'>
-                <div className='font-bold text-[1.2rem] ml-[2rem]'>
-                    Videos
+        return <>
+            <div className="flex flex-col">
+                <div className='flex justify-start w-[78rem] border-b-[1px] border-slate-400 pb-2'>
+                    <div className='font-bold text-[1.2rem] ml-[2rem]'>
+                        Videos
+                    </div>
+                </div>
+                <div className='flex mt-3 justify-center items-center'>
+                    <h1 className="text-[2rem] font-bold">No Videos</h1>
                 </div>
             </div>
-            <div className='flex mt-3 justify-center items-center'>
-                <h1 className="text-[2rem] font-bold">No Videos</h1>
-            </div>
-        </div>
-    </>
+        </>
     }
 
     return (
         <>
-            <div className="flex flex-col">
+            <div className="flex flex-col ml-14">
                 <div className='flex justify-start w-[78rem] border-b-[1px] border-slate-400 pb-2'>
                     <div className='font-bold text-[1.2rem] ml-[2rem]'>
                         Videos

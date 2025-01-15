@@ -1,16 +1,45 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaHome } from "react-icons/fa";
 import { MdHistory } from "react-icons/md";
 import { CgPlayList } from "react-icons/cg";
 import { BiLike } from "react-icons/bi";
 import { GoVideo } from "react-icons/go";
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import Default from '../images/default.png'
+import { StoreContext } from "../context/Context";
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const Options = () => {
 
+    const { URL , isLoggedin } = useContext(StoreContext);
+    const [Subscription, setSubscription] = useState([])
+
+    useEffect(() => {
+        if(!isLoggedin){
+            return;
+        }
+        const FetchSubsciber = async () => {
+            try {
+                const responce = await axios.get(`${URL}/api/subscription/getusersubscription`, {
+                    withCredentials: true
+                })
+                setSubscription(responce.data.FindChannels)
+            } catch (error) {
+                if (error.response && error.response.data && error.response.data.message) {
+                    toast.error(error.response.data.message);
+                } else {
+                    toast.error('An unexpected error occurred. Please try again.');
+                }
+            }
+        }
+        FetchSubsciber()
+    }, [isLoggedin])
+
+
     return (
         <>
-            <div className='flex flex-col items-start pl-2'>
+            <div className='flex flex-col h-full items-start pl-2'>
                 <NavLink
                     to='/'
                     className={({ isActive }) => isActive ? "bg-gray-200 rounded-[10px] overflow-hidden" : "text-gray-800"}
@@ -20,9 +49,9 @@ const Options = () => {
                         <h1 className='font-semibold'>Home</h1>
                     </div>
                 </NavLink>
-                    <div className='flex justify-center w-[10rem] my-1'>
-                        <hr className='w-[8rem] h-[2px] bg-black' />
-                    </div>
+                <div className='flex justify-center w-[10rem] my-1'>
+                    <hr className='w-[8rem] h-[2px] bg-black' />
+                </div>
                 <NavLink
                     to='/history'
                     className={({ isActive }) => isActive ? "bg-gray-200 rounded-[10px] overflow-hidden" : "text-gray-800"}
@@ -62,8 +91,23 @@ const Options = () => {
                 <div className='flex justify-center w-[10rem] my-1'>
                     <hr className='w-[8rem] h-[2px] bg-black' />
                 </div>
-                <div className='flex gap-2 items-center px-4 py-2 w-[10rem] rounded-[10px] hover:bg-gray-200 duration-300 cursor-pointer'>
+                <div className='flex gap-2 items-center px-4 py-2 w-[10rem] rounded-[10px] duration-300'>
                     <h1 className='font-semibold'>Subscriptions</h1>
+                </div>
+                <div className='h-[30rem] overflow-hidden overflow-y-auto hide-scrollbar'>
+                    {Subscription &&
+                        Subscription.map((item, index) => {
+                            return (item.channel &&
+                                <Link to={`/channel/${item.channel._id}`} key={index}><div className={`flex gap-2 items-center px-4 w-[10rem] py-2 rounded-[10px] duration-300 cursor-pointer hover:bg-gray-300`}>
+                                    <img src={item.channel.avatar} alt="avatar" className='w-[1.8rem] h-[1.8rem] rounded-full' />
+                                    <h1 className='font-semibold'>{item.channel.channel_name}</h1>
+                                </div></Link>
+                            )
+                        })
+                    }
+                </div>
+                <div className='flex justify-center w-[10rem] my-1'>
+                    <hr className='w-[8rem] h-[2px] bg-black' />
                 </div>
             </div>
         </>

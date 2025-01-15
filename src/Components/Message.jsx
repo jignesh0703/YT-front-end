@@ -192,7 +192,7 @@ const Message = () => {
 
     return (
         <>
-            <div className='w-[55rem] ml-[22.5rem] rounded-[5px] mt-4'>
+            <div className='w-[55rem] ml-[6.5rem] rounded-[5px] mt-4'>
                 <div>
                     <h1 className='font-extrabold'>{CommentCount} Comments</h1>
                 </div>

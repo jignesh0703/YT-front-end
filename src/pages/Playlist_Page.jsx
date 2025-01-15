@@ -139,7 +139,7 @@ const Playlist_Page = () => {
                                             </div>
                                         })
                                     ) : (
-                                        <></>
+                                        <p className='w-full h-full justify-center flex items-center text-[2rem] font-bold mt-[4rem] mr-[9rem]'>Playlist is Empty</p>
                                     )
                                 : <></>
                         }

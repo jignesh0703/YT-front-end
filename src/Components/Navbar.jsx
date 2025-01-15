@@ -95,7 +95,7 @@ const Navbar = () => {
                                                 <h1 className='font-medium'>{data.username}</h1>
                                                 <h1 className='font-medium'>{data.email}</h1>
                                             </div>
-                                            <Link to="/profile" >
+                                            <Link to={`/profile/${data._id}`} >
                                                 <h1 className='text-blue-500 text-[0.7rem] font-bold cursor-pointer' onClick={() => setsawlogin(false)}>View your channel</h1>
                                             </Link>
                                         </div>

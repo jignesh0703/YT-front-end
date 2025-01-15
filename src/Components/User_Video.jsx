@@ -17,7 +17,8 @@ const User_Video = () => {
                     const responce = await axios.get(`${URL}/api/video/getuservideo`, {
                         withCredentials: true
                     })
-                    setVidoes(responce.data.Videos)
+                    const sortedVideos = responce.data.Videos.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    setVidoes(sortedVideos)
                 } catch (error) {
                 } finally {
                     setLoading(false)
