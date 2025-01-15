@@ -116,7 +116,7 @@ const Upload_Video = () => {
                                     <img
                                         src={formdata.videolink}
                                         alt="videolink"
-                                        className='w-[25rem] cursor-pointer h-[10rem] object-fill'
+                                        className='w-[20rem] sm:w-[25rem] cursor-pointer h-[8rem] sm:h-[10rem] object-fill'
                                     />
                                 )}
                             </label>
@@ -133,7 +133,7 @@ const Upload_Video = () => {
                                 <img
                                     src={formdata.thumbnail}
                                     alt="thumbnail"
-                                    className='w-[25rem] cursor-pointer h-[10rem] object-fill' />
+                                    className='w-[20rem] sm:w-[25rem] cursor-pointer h-[8rem] sm:h-[10rem] object-fill' />
                             </label>
                             <input
                                 type="file"
@@ -146,7 +146,7 @@ const Upload_Video = () => {
                             <label htmlFor="title" className='text-[1.3rem]'>Title</label>
                             <input
                                 type="text"
-                                className='border-[1px] border-[#454545] w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
+                                className='border-[1px] border-[#454545] w-[20rem] sm:w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
                                 name="title"
                                 value={formdata.title}
                                 onChange={ChangeHandler}
@@ -160,7 +160,7 @@ const Upload_Video = () => {
                                 rows="8"
                                 value={formdata.desciption}
                                 onChange={ChangeHandler}
-                                className='border-[1px] border-[#454545] w-[24rem] outline-none pl-4 pt-1 bg-slate-100 rounded-[5px]'
+                                className='border-[1px] border-[#454545] w-[20rem] sm:w-[24rem] outline-none pl-4 pt-1 bg-slate-100 rounded-[5px]'
                                 required
                             ></textarea>
                         </div>
@@ -168,7 +168,7 @@ const Upload_Video = () => {
                             <label htmlFor="email or username" className='text-[1.3rem]'>Publish</label>
                             <select
                                 name="isPublished"
-                                className='border-[1px] border-[#454545] w-[24rem] outline-none pl-4 bg-slate-100 rounded-[5px] cursor-pointer'
+                                className='border-[1px] border-[#454545] w-[20rem] sm:w-[24rem] outline-none pl-4 bg-slate-100 rounded-[5px] cursor-pointer'
                                 value={formdata.isPublished}
                                 onChange={ChangeHandler}
                             >
@@ -177,7 +177,7 @@ const Upload_Video = () => {
                             </select>
                         </div>
                         <div>
-                            <button type="submit" className='flex justify-center items-center w-[25rem] h-[2.2rem] outline-none bg-[#F14A00] mt-4 text-[1.1rem] font-bold text-white rounded-[5px]'>Upload Video</button>
+                            <button type="submit" className='flex justify-center items-center w-[20rem] sm:w-[25rem] h-[2.2rem] outline-none bg-[#F14A00] mt-4 text-[1.1rem] font-bold text-white rounded-[5px]'>Upload Video</button>
                         </div>
                     </form>
                 </div>

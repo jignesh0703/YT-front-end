@@ -12,6 +12,10 @@
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+.blacks-overlay{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
 .hide-scrollbar::-webkit-scrollbar{
     display: none;
 }

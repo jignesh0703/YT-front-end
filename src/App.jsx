@@ -16,6 +16,7 @@ import Playlist from './pages/Playlist';
 import Update_Video from './pages/Update_Video'
 import Playlist_Page from './pages/Playlist_Page';
 import Like from './pages/Like';
+import Options from './Components/Options';
 
 const App = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
           <Route path='/yourvideo' element={<YourVideo />} />
           <Route path='/updatevideo/:id' element={<Update_Video />} />
           <Route path='/playlist/:playlistid' element={<Playlist_Page />} />
+          <Route path='/try' element={<Options />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -141,9 +141,9 @@ const Signup_Login = () => {
                     <Oval type="Oval" color="#00BFFF" height={50} width={50} />
                 </div>
             )}
-            <div className='flex justify-center bg-[#f0f4f9] h-screen w-full'>
+            <div className={`flex justify-center bg-[#f0f4f9] w-full ${Loginstate === 'Login' ? 'h-screen' : 'h-max pb-4'}`}>
                 <div className={`flex justify-center bg-white w-max h-max shadow-md ${Loginstate === "Login" ? 'mt-[10%]' : 'mt-[2%]'}`}>
-                    <div className='p-4 px-12 '>
+                    <div className='p-4 px-12'>
                         <div className='flex justify-center text-[2rem] text-[#F14A00] font-bold mb-3 border-b-[1px] border-[#454545] pb-2'>
                             <h1>{Loginstate} Here</h1>
                         </div>
@@ -156,7 +156,7 @@ const Signup_Login = () => {
                                             <img
                                                 src={formData.avatar}
                                                 alt="avatar"
-                                                className='rounded-full w-[8rem] h-[8rem] cursor-pointer object-cover' />
+                                                className='rounded-full w-[6rem] sm:w-[8rem] h-[6rem] sm:h-[8rem] cursor-pointer object-cover' />
                                         </label>
                                         <input
                                             type="file"
@@ -175,7 +175,7 @@ const Signup_Login = () => {
                                             <img
                                                 src={formData.coverimage}
                                                 alt="coverimage"
-                                                className='w-[25rem] cursor-pointer h-[10rem] object-fill' />
+                                                className='w-[18rem] sm:w-[25rem] cursor-pointer h-[8rem] sm:h-[10rem] object-fill' />
                                         </label>
                                         <input
                                             type="file"
@@ -192,7 +192,7 @@ const Signup_Login = () => {
                                         <label htmlFor="email or username" className='text-[1.3rem]'>Email Address or username</label>
                                         <input
                                             type="text"
-                                            className='border-[1px] border-[#454545] w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
+                                            className='border-[1px] border-[#454545] w-[18rem] sm:w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
                                             name="emailorusername"
                                             value={formData.emailorusername}
                                             onChange={ChangeInput}
@@ -206,7 +206,7 @@ const Signup_Login = () => {
                                         <label htmlFor="email" className='text-[1.3rem]'>Email</label>
                                         <input
                                             type="text"
-                                            className='border-[1px] border-[#454545] w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
+                                            className='border-[1px] border-[#454545] w-[18rem] sm:w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
                                             name="email"
                                             value={formData.email}
                                             onChange={ChangeInput}
@@ -223,7 +223,7 @@ const Signup_Login = () => {
                                             name="username"
                                             value={formData.username}
                                             onChange={ChangeInput}
-                                            className='border-[1px] border-[#454545] w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
+                                            className='border-[1px] border-[#454545] w-[18rem] sm:w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
                                             required />
                                     </div>
                                     : <></>
@@ -234,7 +234,7 @@ const Signup_Login = () => {
                                         <label htmlFor="channel_name" className='text-[1.3rem]'>Channel Name</label>
                                         <input
                                             type="text"
-                                            className='border-[1px] border-[#454545] w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
+                                            className='border-[1px] border-[#454545] w-[18rem] sm:w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
                                             name="channel_name"
                                             value={formData.channel_name}
                                             onChange={ChangeInput}
@@ -246,16 +246,16 @@ const Signup_Login = () => {
                                 <label htmlFor="password" className='text-[1.3rem]'>Password</label>
                                 <input
                                     type="password"
-                                    className='border-[1px] border-[#454545] w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
+                                    className='border-[1px] border-[#454545] w-[18rem] sm:w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
                                     name="password"
                                     value={formData.password}
                                     onChange={ChangeInput}
                                     required />
                             </div>
                             <div>
-                                <button type="submit" className='flex justify-center items-center w-[25rem] h-[2.2rem] outline-none bg-[#F14A00] mt-4 text-[1.1rem] font-bold text-white rounded-[5px]'>{Loginstate}</button>
+                                <button type="submit" className='flex justify-center items-center w-[18rem] sm:w-[25rem] h-[2.2rem] outline-none bg-[#F14A00] mt-4 text-[1.1rem] font-bold text-white rounded-[5px]'>{Loginstate}</button>
                             </div>
-                            <div className='flex gap-2 text-[1.2rem] mt-2 font-medium'>
+                            <div className='flex gap-2 text-[1.2rem] mt-2 font-medium flex-wrap justify-center '>
                                 {
                                     Loginstate === "Login" ? <p> Don't have account? </p> : <p> Already have a account? </p>
                                 }

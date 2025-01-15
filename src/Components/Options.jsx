@@ -5,7 +5,6 @@ import { CgPlayList } from "react-icons/cg";
 import { BiLike } from "react-icons/bi";
 import { GoVideo } from "react-icons/go";
 import { Link, NavLink } from 'react-router-dom';
-import Default from '../images/default.png'
 import { StoreContext } from "../context/Context";
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -39,7 +38,7 @@ const Options = () => {
 
     return (
         <>
-            <div className='flex flex-col h-full items-start pl-2'>
+            <div className='hidden flex-col h-full items-start pl-2 lg:flex'>
                 <NavLink
                     to='/'
                     className={({ isActive }) => isActive ? "bg-gray-200 rounded-[10px] overflow-hidden" : "text-gray-800"}
