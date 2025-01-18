@@ -5,10 +5,12 @@ import { StoreContext } from "../context/Context";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Oval } from 'react-loader-spinner';
+import { useNavigate } from 'react-router-dom';
 
 const Upload_Video = () => {
 
     const { URL } = useContext(StoreContext);
+    const nevigation = useNavigate();
     const [ThumbnailFile, setThumbnailFile] = useState(null)
     const [VideoFile, setVideoFile] = useState(null)
     const [isLoading, setIsLoading] = useState(false);
@@ -73,6 +75,7 @@ const Upload_Video = () => {
                 withCredentials : true
             })
             toast.success(responce.data.message)
+            nevigation('/')
             setformdata({
                 title: '',
                 desciption: '',
