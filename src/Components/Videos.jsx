@@ -5,9 +5,9 @@ import { StoreContext } from "../context/Context";
 
 const Videos = () => {
     const { URL } = useContext(StoreContext);
-    const [videos, setVideos] = useState([]); // Store all fetched videos
-    const [loading, setLoading] = useState(false); // Track loading state
-    const [error, setError] = useState(null); // Track errors
+    const [videos, setVideos] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [page, setPage] = useState(1); // Track the current page
     const [hasMore, setHasMore] = useState(true); // Indicate if more videos are available
 

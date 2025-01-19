@@ -115,7 +115,7 @@ const Update_Video = () => {
         </div>
       )}
       <div className='flex justify-center h-screen bg-[#f0f4f9] w-full pt-2'>
-        <div className='p-4 px-12 shadow-md bg-white mt-[5rem]'>
+        <div className='p-4 px-8 sm:px-12 h-max shadow-md bg-white sm:mt-[5rem]'>
           <div className='flex justify-center text-[2rem] text-[#F14A00] font-bold mb-3 border-b-[1px] border-[#454545] pb-2'>
             <h1>Update Video Here</h1>
           </div>
@@ -126,7 +126,7 @@ const Update_Video = () => {
                 <img
                   src={formData.thumbnail}
                   alt="thumbnail"
-                  className='w-[25rem] cursor-pointer h-[10rem] object-fill' />
+                  className='w-[20rem] sm:w-[25rem] cursor-pointer h-[8rem] sm:h-[10rem] object-fill' />
               </label>
               <input
                 type="file"
@@ -139,7 +139,7 @@ const Update_Video = () => {
               <label htmlFor="title" className='text-[1.3rem]'>Title</label>
               <input
                 type="text"
-                className='border-[1px] border-[#454545] w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
+                className='border-[1px] border-[#454545] w-[20rem] sm:w-[24rem] h-[2rem] outline-none pl-4 bg-slate-100 rounded-[5px]'
                 name="title"
                 value={formData.title}
                 onChange={ChangeHandler}
@@ -151,7 +151,7 @@ const Update_Video = () => {
                 name="desciption"
                 cols="30"
                 rows="8"
-                className='border-[1px] border-[#454545] w-[24rem] outline-none pl-4 pt-1 bg-slate-100 rounded-[5px]'
+                className='border-[1px] border-[#454545] w-[20rem] sm:w-[24rem] outline-none pl-4 pt-1 bg-slate-100 rounded-[5px]'
                 value={formData.desciption}
                 onChange={ChangeHandler}
               ></textarea>
@@ -170,7 +170,7 @@ const Update_Video = () => {
             </div>
 
             <div>
-              <button type="submit" className='flex justify-center items-center w-[25rem] h-[2.2rem] outline-none bg-[#F14A00] mt-4 text-[1.1rem] font-bold text-white rounded-[5px]'>Update Video</button>
+              <button type="submit" className='flex justify-center items-center w-[20rem] sm:w-[25rem] h-[2.2rem] outline-none bg-[#F14A00] mt-4 text-[1.1rem] font-bold text-white rounded-[5px]'>Update Video</button>
             </div>
           </form>
         </div>

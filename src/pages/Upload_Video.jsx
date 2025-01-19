@@ -102,7 +102,7 @@ const Upload_Video = () => {
                 </div>
             )}
             <div className='flex justify-center h-max bg-[#f0f4f9] w-full pt-2'>
-                <div className='p-4 px-12 shadow-md bg-white'>
+                <div className='p-4 px-12 h-max shadow-md bg-white'>
                     <div className='flex justify-center text-[2rem] text-[#F14A00] font-bold mb-3 border-b-[1px] border-[#454545] pb-2'>
                         <h1>Upload Video Here</h1>
                     </div>
@@ -111,7 +111,7 @@ const Upload_Video = () => {
                             <label htmlFor="videolink" className='text-[1.3rem]'>Video</label>
                             <label htmlFor="videolink">
                                 {formdata.videolink !== Default ? (
-                                    <video controls className="w-[25rem] h-[10rem]">
+                                    <video controls className="w-[20rem] sm:w-[25rem] h-[8rem] sm:h-[10rem]">
                                         <source src={formdata.videolink} type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>

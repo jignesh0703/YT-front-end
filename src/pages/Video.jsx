@@ -14,6 +14,7 @@ import Options from '../Components/Options'
 import Message from '../Components/Message';
 import PlayList from '../Components/PlayList';
 import Create_Playlist from '../Components/Create_Playlist';
+import Semi_Videos from '../Components/Semi_Videos';
 
 const Video = () => {
 
@@ -359,6 +360,9 @@ const Video = () => {
             <p className='w-full h-full justify-center flex items-center text-[2rem] font-bold mt-[4rem]'>Loading...</p>
           )}
           <Message />
+        </div>
+        <div>
+          <Semi_Videos />
         </div>
       </div>
       {
