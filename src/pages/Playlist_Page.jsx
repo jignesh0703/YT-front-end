@@ -111,11 +111,11 @@ const Playlist_Page = () => {
                                                             <div className='w-[3rem]'>
                                                                 <img src={item.owner.avatar} alt="avatar" className='w-[2.5rem] h-[2.5rem] ml-2 rounded-full' />
                                                             </div>
-                                                            <div className='flex flex-col ml-2 w-[18rem] 4xl:w-[20rem]'>
-                                                                <div className='font-bold'>
+                                                            <div className='flex flex-col ml-2 w-[13.5rem] 4xl:w-[15.5rem]'>
+                                                                <div className='font-bold whitespace-nowrap overflow-hidden text-ellipsis'>
                                                                     {sawtitle}
                                                                 </div>
-                                                                <div className='text-[0.8rem]'>
+                                                                <div className='text-[0.8rem]'> 
                                                                     <h1>{item.owner.channel_name}</h1>
                                                                 </div>
                                                                 <div className='flex gap-2 text-[0.8rem]'>

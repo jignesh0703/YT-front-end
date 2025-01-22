@@ -135,7 +135,7 @@ const Updata_Profile = () => {
                 }
                 {
                     isLoggedin && data
-                        ? <div className='flex justify-center mt-[2rem] w-full'>
+                        ? <div className='flex justify-center mt-[2rem] w-full lg:mr-[10rem] 2xl:mr-[12rem]'>
                             <div className='w-[80%]'>
                                 <div className='w-full justify-center flex flex-col items-center'>
                                     <img src={data.coverimage} alt="cover_image" className='w-[20rem] h-[8rem] sm:w-[80%] xl:w-[70%] 2xl:w-[60%] sm:h-[10rem] md:h-[12rem]' />
