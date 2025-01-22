@@ -74,18 +74,27 @@ const Videos = () => {
             <div className='w-full h-max flex justify-center mt-4'>
                 <div className='w-[90%]'>
                     <div className='flex gap-6 lg:gap-8 justify-center lg:justify-start xl:gap-4 2xl:gap-8 flex-wrap 2xl:ml-[3rem] 3xl:ml-0'>
-                        {videos.map((item) => (
-                            <Video
-                                key={item._id}
-                                thumbnail={item.thumbnail}
-                                title={item.title}
-                                views={item.views}
-                                id={item._id}
-                                avatar={item.owner.avatar}
-                                channel_name={item.owner.channel_name}
-                                createdAt={item.createdAt}
-                            />
-                        ))}
+                        {
+                            videos?.length > 0 ?
+                                (
+                                    videos.map((item) => (
+                                        <Video
+                                            key={item._id}
+                                            thumbnail={item.thumbnail}
+                                            title={item.title}
+                                            views={item.views}
+                                            id={item._id}
+                                            avatar={item.owner?.avatar}
+                                            channel_name={item.owner?.channel_name}
+                                            createdAt={item.createdAt}
+                                        />
+                                    ))
+                                ) : (
+                                    <div className='flex justify-center'>
+                                        <h1 className='text-[2rem] font-bold lg:mr-[11.5rem]'>No Video is available</h1>
+                                    </div>
+                                )
+                        }
                     </div>
                     {loading && <p>Loading more videos...</p>}
                 </div>
