@@ -4,11 +4,13 @@ import Options from '../Components/Options'
 import { StoreContext } from "../context/Context";
 import axios from 'axios';
 import Video from '../Components/Video';
+import Mobile_Option from '../Components/Mobile_Option';
 
 const Like = () => {
 
     const { URL, isLoggedin } = useContext(StoreContext);
     const [GetLikedVideos, setGetLikedVideos] = useState([])
+    const [sawOption, setsawOption] = useState(false)
 
     useEffect(() => {
         if (!isLoggedin) {
@@ -33,15 +35,18 @@ const Like = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar setsawOption={setsawOption} sawOption={sawOption} />
             <div className='flex'>
                 <Options />
+                {
+                    sawOption && <Mobile_Option setsawOption={setsawOption} />
+                }
                 <div className='flex w-full h-max flex-col'>
-                    <div className='flex justify-center w-full text-[2rem] -ml-[6rem] font-bold mt-2'>
+                    <div className='flex justify-center w-full text-[2rem] lg:-ml-[6rem] font-bold mt-2'>
                         Liked Videos
                     </div>
                     <div className='w-full mt-[2rem]'>
-                        <div className=' flex gap-8 flex-wrap ml-[5rem]'>
+                        <div className='flex gap-8 flex-wrap lg:ml-[3rem] justify-center lg:justify-start 2xl:ml-[8rem] 3xl:ml-[5rem]'>
                             {
                                 isLoggedin ?
                                     (

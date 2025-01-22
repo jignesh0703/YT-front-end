@@ -30,7 +30,7 @@ const User_Video = () => {
 
     if (!isLoggedin) return (
         <div className='flex justify-center w-full'>
-            <h1 className='text-[2rem] font-bold mr-[11.5rem] mt-[3rem]'>Login is required</h1>
+            <h1 className='text-[2rem] font-bold lg:mr-[11.5rem] mt-[3rem]'>Login is required</h1>
         </div>
     )
 
@@ -40,14 +40,14 @@ const User_Video = () => {
             <div className='w-full'>
                 {
                     Vidoes?.length > 0 ? <div className='flex justify-center'>
-                        <h1 className='text-[2rem] font-bold mr-[11.5rem]'>Your Videos</h1>
+                        <h1 className='text-[2rem] font-bold lg:mr-[11.5rem]'>Your Videos</h1>
                     </div> : <></>
                 }
-                <div className='flex gap-[2rem] flex-wrap mt-[1rem] ml-[2rem]'>
+                <div className='flex gap-[2rem] flex-wrap mt-[1rem] lg:ml-[2rem]'>
                     {Loading ? (
                         <p className='w-full h-full justify-center flex items-center text-[2rem] font-bold mt-[4rem]'>Loading...</p>
                     ) : (
-                        <div className="flex gap-[2rem] flex-wrap mt-[1rem] ml-[2rem]">
+                        <div className="flex gap-[2rem] flex-wrap mt-[1rem] lg:ml-[2rem] justify-center lg:justify-start">
                             {Vidoes && Vidoes.length > 0 ? (
                                 Vidoes.map((item, index) => (
                                     <Video

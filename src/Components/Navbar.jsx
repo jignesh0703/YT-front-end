@@ -10,7 +10,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ setsawOption, sawOption }) => {
 
     const Navigate = useNavigate()
 
@@ -60,7 +60,7 @@ const Navbar = () => {
         <>
             <div className='flex p-4 items-center justify-between sm:justify-start'>
                 <div className='flex items-center gap-6 w-[15%] justify-center'>
-                    <HiOutlineBars3 className='text-[2rem] cursor-pointer lg:hidden' />
+                    <HiOutlineBars3 className='text-[2rem] cursor-pointer lg:hidden' onClick={() => setsawOption(sawOption ? false : true)} />
                     <h1 className='text-[1.3rem] font-semibold hidden lg:flex'>StreamSphere</h1>
                 </div>
                 <div className='sm:w-[70%] flex justify-center'>
@@ -71,10 +71,10 @@ const Navbar = () => {
                 </div>
                 {
                     sawsearch
-                        ? <div className='w-full h-full top-0 left-0 fixed blacks-overlay' onClick={()=>setsawsearch(false)}>
-                            <div className='border border-[#454545] items-center justify-center w-max rounded-full overflow-hidden flex mt-[3rem] ml-4 z-50' onClick={(e)=>{
+                        ? <div className='w-full h-full flex justify-center items-start top-0 left-0 fixed blacks-overlay z-50' onClick={() => setsawsearch(false)}>
+                            <div className='border border-[#454545] items-center justify-center w-max rounded-full overflow-hidden flex mt-[3rem] ml-4 z-50' onClick={(e) => {
                                 e.stopPropagation()
-                                }}>
+                            }}>
                                 <input type="text" placeholder='Search' className='text-[1.2rem] w-[18rem] pl-4 h-[2.5rem] border-none outline-none' />
                                 <CiSearch className='cursor-pointer hover:bg-slate-200 w-[4rem] h-[2.5rem] p-2 border-l-[1px] border-[#454545] text-center transition duration-200' />
                             </div>
@@ -83,7 +83,7 @@ const Navbar = () => {
                 }
 
                 <div className='flex xl:w-[15%] justify-center items-center gap-4 sm:gap-6'>
-                    <div className='flex px-2 lg:px-4 py-2 rounded-full bg-[#F0F0F0] hover:bg-[#E0E0E0] cursor-pointer items-center sm:hidden' onClick={()=>setsawsearch(true)}>
+                    <div className='flex px-2 lg:px-4 py-2 rounded-full bg-[#F0F0F0] hover:bg-[#E0E0E0] cursor-pointer items-center sm:hidden' onClick={() => setsawsearch(true)}>
                         <CiSearch className='text-[1.3rem]' />
                     </div>
                     <div className='flex px-2 lg:px-4 py-2 rounded-full bg-[#F0F0F0] hover:bg-[#E0E0E0] cursor-pointer items-center gap-2' onClick={UploadVideo}>

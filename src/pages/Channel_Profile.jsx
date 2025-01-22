@@ -7,12 +7,14 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import Profile from '../Components/Profile';
 import User_Vidoes from '../Components/User_Vidoes';
+import Mobile_Option from '../Components/Mobile_Option';
 
 const Channel_Profile = () => {
 
   const { URL } = useContext(StoreContext);
   const { id } = useParams()
   const [ChannelData, setChannelData] = useState([])
+  const [sawOption, setsawOption] = useState(false)
 
   useEffect(() => {
     const GetChannelData = async () => {
@@ -34,16 +36,19 @@ const Channel_Profile = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar setsawOption={setsawOption} sawOption={sawOption} />
       <div className='flex'>
         <Options />
-        <div className='flex  mt-4 ml-[2rem] flex-col items-center'>
+        {
+          sawOption && <Mobile_Option setsawOption={setsawOption} />
+        }
+        <div className='flex mt-4 lg:ml-[2rem] flex-col'>
           {
             ChannelData.map((item, index) => {
               return <Profile id={item._id} coverimage={item.coverimage} avatar={item.avatar} channel_name={item.channel_name} username={item.username} key={index} />
             })
           }
-          <div className='flex justify-center flex-wrap'>
+          <div className='flex justify-center flex-wrap mt-6 md:mt-0'>
             <User_Vidoes />
           </div>
         </div>

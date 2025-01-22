@@ -63,7 +63,7 @@ const Videos = () => {
 
     if (error) {
         return (
-            <p className='w-full h-full justify-center flex items-center text-[2rem] font-bold mt-[4rem] mr-[9rem]'>
+            <p className='w-full h-full justify-center flex items-center text-[2rem] font-bold mt-[4rem] lg:mr-[9rem]'>
                 {error}
             </p>
         );
@@ -73,7 +73,7 @@ const Videos = () => {
         <>
             <div className='w-full h-max flex justify-center mt-4'>
                 <div className='w-[90%]'>
-                    <div className='flex gap-8 flex-wrap'>
+                    <div className='flex gap-6 lg:gap-8 justify-center lg:justify-start xl:gap-4 2xl:gap-8 flex-wrap 2xl:ml-[3rem] 3xl:ml-0'>
                         {videos.map((item) => (
                             <Video
                                 key={item._id}

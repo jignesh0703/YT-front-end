@@ -65,7 +65,7 @@ const Profile = ({ id, coverimage, avatar, username, channel_name }) => {
       }
     }
     CheckIsSubscribed()
-  }, [isLoggedin,id])
+  }, [isLoggedin, id])
 
   useEffect(() => {
     const FetchSubsciber = async () => {
@@ -100,29 +100,29 @@ const Profile = ({ id, coverimage, avatar, username, channel_name }) => {
 
   return (
     <>
-      <div className='w-[80%] flex justify-center flex-col'>
-        <div className='h-[15rem] overflow-hidden object-fill w-[75rem]'>
-          <img src={coverimage} alt="cover_image" className='w-[75rem] h-[15rem] object-cover' />
+      <div className='w-full lg:w-[80%] flex justify-center flex-col items-center lg:items-start xl:ml-8 2xl:ml-[4rem] 3xl:ml-[8rem] 4xl:ml-[10rem]'>
+        <div className='h-[6rem] sm:h-[8rem] md:h-[9rem] lg:h-[10rem] xl:h-[12rem] 2xl:h-[13rem] 3xl:h-[14rem] 4xl:h-[15rem] overflow-hidden object-fill w-[20rem] sm:w-[35rem] md:w-[40rem] lg:w-[45rem] xl:w-[60rem] 2xl:w-[65rem] 3xl:w-[70rem] 4xl:w-[75rem]'>
+          <img src={coverimage} alt="cover_image" className='w-[20rem] sm:w-[35rem] md:w-[40rem] lg:w-[45rem] xl:w-[60rem] 2xl:w-[65rem] 3xl:w-[70rem] 4xl:w-[75rem] h-[6rem] sm:h-[8rem] md:h-[9rem] lg:h-[10rem] xl:h-[12rem] 2xl:h-[13rem] 3xl:h-[14rem] 4xl:h-[15rem] object-cover' />
         </div>
-        <div className='flex gap-4 ml-4 w-[92.8rem]'>
-          <div className="w-[8rem] h-[8rem] rounded-full overflow-hidden mt-2">
+        <div className='flex gap-4 ml-8 sm:ml-4 w-[20rem] sm:w-[35rem] md:w-[40rem] lg:w-[45rem] xl:w-[58rem] 2xl:w-[63rem] 4xl:w-[92.8rem]'>
+          <div className="w-[4rem] sm:w-[6rem] md:w-[7rem] xl:w-[8rem] h-[4rem] sm:h-[6rem] md:h-[7rem] xl:h-[8rem] rounded-full overflow-hidden mt-2">
             <img
               src={avatar}
               alt="avatar"
               className="w-full h-full object-cover rounded-full"
             />
           </div>
-          <div className='mt-1'>
-            <h1 className='text-[2rem] font-bold'>{channel_name}</h1>
-            <h1 className='ml-1'>{username}</h1>
-            <div className='flex items-start gap-1 w-max'>
+          <div className='sm:mt-1'>
+            <h1 className='sm:text-[1.5rem] mt-2 md:mt-0 md:text-[2rem] font-bold'>{channel_name}</h1>
+            <h1 className='ml-1 text-[.9rem] sm:text-[1rem]'>{username}</h1>
+            <div className='flex items-start gap-1 w-max text-[.9rem] sm:text-base'>
               <h1>{SubscriberCount} Subscribers</h1>
               <hr className='w-[5px] h-[5px] bg-gray-800 rounded-full mt-[5px]' />
               <h1>{CountUserVideos} Videos</h1>
             </div>
             {
               Check === 'true' ? <Link to="/update">
-                <div className='mt-2'>
+                <div className='mt-2 hidden sm:flex'>
                   <button className='bg-black text-white p-2 px-4 rounded-[20px] font-bold text-[0.8rem] hover:bg-[#454545] transition duration-200 border-none'>
                     Update Profile
                   </button>
@@ -131,9 +131,24 @@ const Profile = ({ id, coverimage, avatar, username, channel_name }) => {
                 : <></>
             }
           </div>
-          <div className='ml-[35rem] mt-[2rem]'>
-            <button className={`text-white p-2 px-6 rounded-[20px] font-bold ${Subscribe ? 'bg-slate-600' : 'bg-black'} `} onClick={SubscribeToggle}>{isLoggedin && Subscribe ? 'Unsubscribed' : 'Subscribed'}</button>
+          <div className='hidden sm:flex w-max h-max sm:ml-[5rem] md:ml-[8rem] lg:ml-[13rem] xl:ml-[25rem] 2xl:ml-[30rem] 4xl:ml-[35rem] mt-[2rem]'>
+            <button className={`text-white sm:p-2 md:p-2 sm:px-4 md:px-6 rounded-[20px] font-bold ${Subscribe ? 'bg-slate-600' : 'bg-black'} `} onClick={SubscribeToggle}>{isLoggedin && Subscribe ? 'Unsubscribed' : 'Subscribed'}</button>
           </div>
+        </div>
+        <div className='flex gap-4 sm:hidden mt-2'>
+          <div className='w-max h-max mt-2'>
+            <button className={`text-white p-2 px-6 rounded-[20px] text-[0.8rem] font-bold ${Subscribe ? 'bg-slate-600' : 'bg-black'} `} onClick={SubscribeToggle}>{isLoggedin && Subscribe ? 'Unsubscribed' : 'Subscribed'}</button>
+          </div>
+          {
+            Check === 'true' ? <Link to="/update">
+              <div className='mt-2 sm:flex'>
+                <button className='bg-black text-white p-2 px-6 rounded-[20px] font-bold text-[0.8rem] hover:bg-[#454545] transition duration-200 border-none'>
+                  Update Profile
+                </button>
+              </div>
+            </Link>
+              : <></>
+          }
         </div>
       </div>
     </>

@@ -10,15 +10,15 @@ const Video = ({ thumbnail, title, views, id, avatar, channel_name, createdAt })
     return (
         <>
             <Link to={`/video/:${id}`}>
-                <div className='w-[22rem]'>
+                <div className='w-[20rem] 4xl:w-[22rem]'>
                     <div className='flex'>
-                        <img src={thumbnail} alt="thumbnail" className='w-[22rem] h-[12rem] object-cover cursor-pointer rounded-[15px]' />
+                        <img src={thumbnail} alt="thumbnail" className='w-[20rem] 4xl:w-[22rem] h-[11rem] 4xl:h-[12rem] object-cover cursor-pointer rounded-[15px]' />
                     </div>
                     <div className='flex mt-2 items-start gap-2'>
                         <div className='w-[3rem]'>
                             <img src={avatar} alt="avatar" className='w-[2.5rem] h-[2.5rem] ml-2 rounded-full' />
                         </div>
-                        <div className='flex flex-col ml-2 w-[20rem]'>
+                        <div className='flex flex-col ml-2 w-[18rem] 4xl:w-[20rem]'>
                             <div className='font-bold'>
                                 {sawtitle}
                             </div>

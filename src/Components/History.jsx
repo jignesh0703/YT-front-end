@@ -85,7 +85,7 @@ const History = () => {
 
     if (!isLoggedin) return (
         <div className='flex justify-center w-full mt-[3rem]'>
-            <h1 className='text-[2rem] font-bold mr-[11.5rem]'>Login is required</h1>
+            <h1 className='text-[2rem] font-bold lg:mr-[11.5rem]'>Login is required</h1>
         </div>
     )
 
@@ -99,15 +99,15 @@ const History = () => {
                 }
                 {
                     history?.length > 0
-                        ? <div className='absolute justify-end right-0 cursor-pointer mr-[10.2rem] -mt-[1.5rem] border-b border-blue-500' onClick={DeleteHistory}>
-                            <h1 className='text-[1.2rem] font-bold text-blue-500'>Clear History</h1>
+                        ? <div className='absolute justify-end right-0 cursor-pointer mr-[2.5rem] sm:mr-[5rem] lg:mr-[10.2rem] -my-[3rem] xl:-mt-[1.5rem] border-b border-blue-500' onClick={DeleteHistory}>
+                            <h1 className='text-[1.2rem] font-bold text-blue-500 z-0'>Clear History</h1>
                         </div>
                         : <></>
                 }
 
                 <div className='w-full h-max flex justify-center mt-4'>
                     <div className='w-[90%]'>
-                        <div className='flex gap-8 flex-wrap'>
+                    <div className='flex gap-6 lg:gap-8 justify-center lg:justify-start xl:gap-4 2xl:gap-8 flex-wrap 2xl:ml-[3rem] 3xl:ml-0'>
                             {
                                 history?.length > 0 ? (
                                     history.map((item, index) => {
@@ -117,15 +117,15 @@ const History = () => {
 
                                         return <div key={index}>
                                             <Link to={`/video/:${item.videoId}`}>
-                                                <div className='w-[22rem]'>
+                                                <div className='w-[20rem] 4xl:w-[22rem]'>
                                                     <div className='flex'>
-                                                        <img src={item.thumbnail} alt="thimbnail" className=' w-[22rem] h-[12rem] object-cover cursor-pointer rounded-[15px]' />
+                                                        <img src={item.thumbnail} alt="thumbnail" className='w-[20rem] 4xl:w-[22rem] h-[11rem] 4xl:h-[12rem] object-cover cursor-pointer rounded-[15px]' />
                                                     </div>
                                                     <div className='flex mt-2 items-start gap-2'>
                                                         <div className='w-[3rem]'>
                                                             <img src={item.avatar} alt="avatar" className='w-[2.5rem] h-[2.5rem] ml-2 rounded-full' />
                                                         </div>
-                                                        <div className='flex flex-col ml-2 w-[20rem]'>
+                                                        <div className='flex flex-col ml-2 w-[18rem] 4xl:w-[20rem]'>
                                                             <div className='font-bold'>
                                                                 {sawtitle}
                                                             </div>
@@ -157,7 +157,7 @@ const History = () => {
                                     })
                                 ) : (
                                     <div className='flex justify-center'>
-                                        <h1 className='text-[2rem] font-bold mr-[11.5rem]'>History is Empty</h1>
+                                        <h1 className='text-[2rem] font-bold lg:mr-[11.5rem]'>History is Empty</h1>
                                     </div>
                                 )
                             }

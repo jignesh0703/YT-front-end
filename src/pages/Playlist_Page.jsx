@@ -7,6 +7,7 @@ import { StoreContext } from "../context/Context";
 import { toast } from 'react-toastify'
 import { formatDistanceToNow } from "date-fns";
 import { HiOutlineDotsVertical } from 'react-icons/hi'
+import Mobile_Option from '../Components/Mobile_Option'
 
 const Playlist_Page = () => {
 
@@ -17,6 +18,7 @@ const Playlist_Page = () => {
     const [sawremovevideo, setsawremovevideo] = useState({})
     const dropdownRef = useRef(null)
     const [trackplaylist, settrackplaylist] = useState(false)
+    const [sawOption, setsawOption] = useState(false)
 
     useEffect(() => {
         const GetPlayListVideos = async () => {
@@ -77,16 +79,19 @@ const Playlist_Page = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar setsawOption={setsawOption} sawOption={sawOption} />
             <div className='flex'>
                 <Options />
-                <div className='flex w-full h-max flex-col'>
-                    <div className='flex justify-center w-full text-[1.5rem] -ml-[6rem] font-bold'>
+                {
+                    sawOption && <Mobile_Option setsawOption={setsawOption} />
+                }
+                <div className='flex w-full h-max flex-col overflow-hidden'>
+                    <div className='flex justify-center w-full text-[1.5rem] lg:-ml-[4rem] xl:-ml-[5rem] 2xl:-ml-[6rem] font-bold'>
                         Playlist Name : {PlayListVideos &&
                             PlayListVideos.Playlistname
                         }
                     </div>
-                    <div className='w-full mt-[2rem] flex gap-4 flex-wrap ml-auto mr-auto'>
+                    <div className='w-full mt-[2rem] flex gap-8 flex-wrap md:ml-[3rem] 2xl:ml-[6rem] 3xl:ml-[3rem] mr-auto justify-center md:justify-start'>
                         {
                             sawvideos ?
                                 PlayListVideos.Videos.length > 0 ?
@@ -98,15 +103,15 @@ const Playlist_Page = () => {
 
                                             return <div key={index}>
                                                 <Link to={`/video/:${item._id}`}>
-                                                    <div className='w-[22rem]'>
+                                                    <div className='w-[20rem] 4xl:w-[22rem] h-max'>
                                                         <div className='flex'>
-                                                            <img src={item.thumbnail} alt="thimbnail" className=' w-[22rem] h-[12rem] object-cover cursor-pointer rounded-[15px]' />
+                                                            <img src={item.thumbnail} alt="thimbnail" className='w-[20rem] 4xl:w-[22rem] h-[11rem] 4xl:h-[12rem] object-cover cursor-pointer rounded-[15px]' />
                                                         </div>
                                                         <div className='flex mt-2 items-start gap-2'>
                                                             <div className='w-[3rem]'>
                                                                 <img src={item.owner.avatar} alt="avatar" className='w-[2.5rem] h-[2.5rem] ml-2 rounded-full' />
                                                             </div>
-                                                            <div className='flex flex-col ml-2 w-[20rem]'>
+                                                            <div className='flex flex-col ml-2 w-[18rem] 4xl:w-[20rem]'>
                                                                 <div className='font-bold'>
                                                                     {sawtitle}
                                                                 </div>
@@ -123,13 +128,13 @@ const Playlist_Page = () => {
                                                                 <HiOutlineDotsVertical />
                                                             </div>
                                                             {
-                                                                sawremovevideo[index] ? <div className='absolute ml-[12rem] mt-[1rem] bg-white shadow-lg p-2 px-4' 
-                                                                ref={dropdownRef} 
-                                                                onClick={(e)=>{
-                                                                    e.stopPropagation();
-                                                                    e.preventDefault();
-                                                                    RemoveVideoInPlayList(e,item._id)
-                                                                }}>
+                                                                sawremovevideo[index] ? <div className='absolute ml-[12rem] mt-[1rem] bg-white shadow-lg p-2 px-4'
+                                                                    ref={dropdownRef}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        e.preventDefault();
+                                                                        RemoveVideoInPlayList(e, item._id)
+                                                                    }}>
                                                                     <h1 className='font-semibold text-center'>Remove From <br /> Playlist</h1>
                                                                 </div> : <></>
                                                             }
@@ -139,7 +144,7 @@ const Playlist_Page = () => {
                                             </div>
                                         })
                                     ) : (
-                                        <p className='w-full h-full justify-center flex items-center text-[2rem] font-bold mt-[4rem] mr-[9rem]'>Playlist is Empty</p>
+                                        <p className='w-full h-full flex justify-center lg:justify-start text-[2rem] font-bold mt-[4rem] lg:mr-[9rem]'>Playlist is Empty</p>
                                     )
                                 : <></>
                         }
