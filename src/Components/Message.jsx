@@ -7,8 +7,9 @@ import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { formatDistanceToNow } from "date-fns";
 import { MdDelete } from "react-icons/md";
+import { IoCloseOutline } from 'react-icons/io5';
 
-const Message = () => {
+const Message = ({ setHideSemi_Videos }) => {
 
     const { id } = useParams()
     const { isLoggedin, data, URL } = useContext(StoreContext);
@@ -180,7 +181,7 @@ const Message = () => {
                             [commentid]: response.data.IsLiked,
                         }));
                     }
-                } catch (error) {  
+                } catch (error) {
                 }
             };
             // Loop through all comments to check the like status
@@ -188,11 +189,111 @@ const Message = () => {
                 CheckUserCommentLiked(comment._id);
             });
         }
-    }, [isLoggedin, CommentsData, URL]);    
+    }, [isLoggedin, CommentsData, URL]);
+
+    const [sawmessageinside, setsawmessageinside] = useState(true)
 
     return (
         <>
-            <div className='w-[55rem] ml-[6.5rem] rounded-[5px] mt-4'>
+            {
+                sawmessageinside
+                    ? <div className='w-[20rem] sm:w-[35rem] md:w-[40rem] lg:w-[45rem] h-[4rem] ml-8 sm:ml-10 md:ml-14 lg:ml-[2rem] rounded-[5px] mt-4 shadow-xl xl:hidden' 
+                    onClick={()=>{
+                        setsawmessageinside(false)
+                        setHideSemi_Videos(false)
+                    }}
+                    >
+                        <h1 className='font-extrabold ml-4 mt-2'>{CommentCount} Comments</h1>
+                        <h1 className='ml-4 '>Tap to see comments</h1>
+                    </div>
+                    : <div className='flex flex-col w-[20rem] sm:w-[35rem] md:w-[39rem] lg:w-[44rem] ml-8 sm:ml-12 md:ml-[4rem] lg:ml-[3rem] rounded-[5px] mt-4 xl:hidden p-2'>
+                        <div className='flex justify-between items-center'>
+                            <h1 className='font-extrabold'>{CommentCount} Comments</h1>
+                            <div className='w-[2.5rem] h-[2.5rem] rounded-full flex justify-center items-center hover:bg-gray-400' 
+                            onClick={()=>{
+                                setsawmessageinside(true)
+                                setHideSemi_Videos(true)
+                            }}
+                            >
+                                <IoCloseOutline className='text-[2rem] rounded-full hover:bg-gray-400' />
+                            </div>
+                        </div>
+                        {
+                            isLoggedin && data
+                                ? <div className='flex gap-4 items-start mt-2'>
+                                    <img src={data.avatar} alt="avatar" className='w-[2.5rem] h-[2.5rem] rounded-full' />
+                                    <div className='w-full'>
+                                        <input type="text" placeholder='Add a comment' className={`w-[100%] outline-none border-b ${sawbuttons ? 'border-black' : 'border-slate-400'}`} onClick={() => setsawbuttons(true)} value={CommentText} onChange={(e) => setCommentText(e.target.value)} />
+                                        {
+                                            sawbuttons
+                                                ? <div className='w-full flex justify-end gap-2 mt-1'>
+                                                    <button className='p-[.3rem] px-4 rounded-full font-semibold text-[.8rem] hover:bg-gray-300' onClick={() => {
+                                                        setsawbuttons(false);
+                                                        setCommentText('')
+                                                    }}>Cancel</button>
+                                                    <button className={`p-[.3rem] px-4 rounded-full font-semibold text-[.8rem] ${CommentText ? 'bg-[#3ea6ff] text-white' : 'bg-gray-300 text-gray-600'}`}
+                                                        disabled={!CommentText.trim()} onClick={SubmitComment}>Comment</button>
+                                                </div>
+                                                : <></>
+                                        }
+                                    </div>
+                                </div>
+                                : <></>
+                        }
+                        {
+                            Array.isArray(CommentsData) && CommentsData.length === 0 ? (
+                                <div className="text-gray-500 mt-4 text-[1.5rem] ml-2">No comments yet.</div>
+                            ) : (
+                                CommentsData.map((item, index) => {
+                                    const isUserComment = isLoggedin && item.UserID._id === data._id;
+                                    return <div className='flex gap-4 mt-2' key={index}>
+                                        <Link to={`/channel/${item.UserID._id}`}>
+                                            <div>
+                                                <img src={item.UserID.avatar} alt="avatar" className='w-[2.5rem] h-[2.5rem] rounded-full' />
+                                            </div>
+                                        </Link>
+                                        <div className='flex flex-col w-[13rem] sm:w-[26    rem] md:w-[31rem] lg:w-[36rem]'>
+                                            <div className='flex gap-2 items-end'>
+                                                <Link to={`/channel/${item.UserID._id}`}>
+                                                    <h1 className='font-bold'>{item.UserID.username}</h1>
+                                                </Link>
+                                                <h1 className='text-zinc-500 text-[.8rem] mb-[3px]'>
+                                                    {item.createdAt ? formatDistanceToNow(new Date(item.createdAt), { addSuffix: true }) : ''}
+                                                </h1>
+                                            </div>
+                                            <h1>{item.comment}</h1>
+                                            <div className='flex items-center gap-4 mt-1'>
+                                                <div className='flex items-center gap-1'>
+                                                    <FaThumbsUp className={`cursor-pointer ${FaThumbsUpLike[item._id] ? 'text-black' : 'text-zinc-400'} `} onClick={() => ToggleCommentLike(item._id)} />
+                                                    <h1>{commentscounts[item._id] || 0}</h1>
+                                                </div>
+                                                <FaThumbsDown className={`mt-[4px] cursor-pointer ${DisLikeHandle[item._id] ? 'text-black' : 'text-zinc-400'}`} onClick={() => HandleDisLike(item._id)} />
+                                            </div>
+                                        </div>
+                                        {
+                                            isUserComment && (
+                                                <div>
+                                                    <div className='cursor-pointer hover:bg-slate-300 p-2 rounded-full duration-300' onClick={() => handleDeleteClick(index)}>
+                                                        <BsThreeDotsVertical />
+                                                    </div>
+                                                    {activeDeleteIndex === index && (
+                                                        <div className='bg-white absolute shadow-lg flex gap-2 items-center p-2 rounded-[10px] cursor-pointer -ml-[.5rem] -mt-2 hover:bg-gray-300 duration-300' onClick={() => DeleteComment(item._id)} ref={dropdownRef}>
+                                                            <MdDelete className='text-[1.5rem]' />
+                                                            Delete
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                })
+                            )
+                        }
+                    </div>
+            }
+
+
+            <div className='hidden xl:flex flex-col xl:w-[45rem] 2xl:w-[50rem] 3xl:w-[55rem] xl:ml-[1rem] 2xl:ml-[3rem] 3xl:ml-[6.5rem] rounded-[5px] mt-4'>
                 <div>
                     <h1 className='font-extrabold'>{CommentCount} Comments</h1>
                 </div>
@@ -230,7 +331,7 @@ const Message = () => {
                                         <img src={item.UserID.avatar} alt="avatar" className='w-[2.5rem] h-[2.5rem] rounded-full' />
                                     </div>
                                 </Link>
-                                <div className='flex flex-col w-[50rem]'>
+                                <div className='flex flex-col xl:w-[40rem] 2xl:w-[45rem] 3xl:w-[50rem]'>
                                     <div className='flex gap-2 items-end'>
                                         <Link to={`/channel/${item.UserID._id}`}>
                                             <h1 className='font-bold'>{item.UserID.username}</h1>

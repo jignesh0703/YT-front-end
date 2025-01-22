@@ -65,7 +65,7 @@ const Semi_Videos = () => {
             <div className='absolute flex justify-center items-center ml-[15rem] mt-[15rem]'>
                 {loading && <p>Loading more videos...</p>}
             </div>
-            <div className='mt-4 ml-[8rem] flex flex-col gap-4'>
+            <div className='justify-center md:ml-[3rem] lg:ml-[3rem] mt-8 sm:mt-8 md:mt-4 xl:ml-8 2xl:ml-[3rem] 3xl:ml-[8rem] flex-wrap gap-8 flex xl:flex-col xl:gap-4'>
                 {
                     Videos.map((item) => {
                         return <Video

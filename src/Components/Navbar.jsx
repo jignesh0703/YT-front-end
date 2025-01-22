@@ -106,7 +106,7 @@ const Navbar = ({ setsawOption, sawOption }) => {
                             isLoggedin && data ? (
                                 <div ref={dropdownRef} className='absolute shadow-md p-2 bg-white w-max mb-[-10rem] right-0 mr-[.5rem] lg:mr-[1.5rem] xl:mr-[2.5rem] 2xl:mr-[3.5rem]'>
                                     <div className='flex items-start'>
-                                        <img src={data.avatar} alt="avatar" className='mt-2 w-[2.3rem] h-[2.3rem] rounded-full overflow-hidden cursor-pointer flex justify-center items-center object-cover' />
+                                        <img src={data?.avatar} alt="avatar" className='mt-2 w-[2.3rem] h-[2.3rem] rounded-full overflow-hidden cursor-pointer flex justify-center items-center object-cover' />
                                         <div className='ml-2'>
                                             <div>
                                                 <h1 className='font-medium'>{data.username}</h1>

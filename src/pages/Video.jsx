@@ -15,6 +15,7 @@ import Message from '../Components/Message';
 import PlayList from '../Components/PlayList';
 import Create_Playlist from '../Components/Create_Playlist';
 import Semi_Videos from '../Components/Semi_Videos';
+import Mobile_Option from '../Components/Mobile_Option';
 
 const Video = () => {
 
@@ -252,6 +253,9 @@ const Video = () => {
     FetchSubsciber()
   }, [Video, tracksubsciber])
 
+  const [HideSemi_Videos, setHideSemi_Videos] = useState(true)
+  const [sawOption, setsawOption] = useState(false)
+
   return (
     <>
       {isLoading && (
@@ -259,110 +263,115 @@ const Video = () => {
           <Oval type="Oval" color="#00BFFF" height={50} width={50} />
         </div>
       )}
-      <Navbar />
+      <Navbar setsawOption={setsawOption} sawOption={sawOption} />
       <div className='w-full h-max flex'>
         <div>
           <Options />
+          {
+            sawOption && <Mobile_Option setsawOption={setsawOption} />
+          }
         </div>
-        <div className='flex flex-col'>
-          {Video ? (
-            <>
-              <div className='ml-[10%]'>
-                {
-                  Video.videolink && (
-                    <video width="100%" controls className='w-[55rem] h-[30rem]'>
-                      <source src={Video.videolink} type="video/mp4" />
-                      <source src={Video.videolink} type="video/webm" />
-                      <source src={Video.videolink} type="video/ogg" />
-                      Your browser does not support the video tag.
-                    </video>
-                  )}
-                <h1 className='font-bold mt-2 text-[1.2rem] w-[55rem]'>{Video.title}</h1>
-                <div className={`flex ${CheckUser ? 'gap-[15rem]' : ' gap-[17rem]'}`}>
-                  <div className='flex w-max gap-2 items-center py-1'>
-                    <Link to={`/channel/${Video.owner._id}`}>
-                      <div className='w-max flex'>
-                        <img src={Video.owner.avatar} alt="avatar" className='w-[2.5rem] h-[2.5rem] rounded-full object-cover' />
-                      </div>
-                    </Link>
-                    <div className='flex flex-col'>
+        <div className='flex flex-col xl:flex-row'>
+          <div className='flex flex-col'>
+            {Video ? (
+              <>
+                <div className='ml-8 sm:ml-[3rem] md:ml-[4rem] lg:ml-[2rem] mt-4 xl:ml-[1rem] 2xl:ml-[2rem] 3xl:ml-[10%]'>
+                  {
+                    Video.videolink && (
+                      <video width="100%" controls className='w-[20rem] sm:w-[35rem] md:w-[40rem] h-[10rem] sm:h-[18rem] md:h-[20rem] lg:w-[45rem] xl:w-[45rem] 2xl:w-[55rem] xl:h-[25rem] 2xl:h-[30rem]'>
+                        <source src={Video.videolink} type="video/mp4" />
+                        <source src={Video.videolink} type="video/webm" />
+                        <source src={Video.videolink} type="video/ogg" />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                  <h1 className='font-bold whitespace-nowrap text-ellipsis overflow-hidden mt-2 text-[1.2rem] w-[20rem] sm:w-[35rem] md:w-[40rem] lg:w-[45rem] xl:w-[45rem] 2xl:w-[55rem]'>{Video.title}</h1>
+                  <div className={`flex ${CheckUser ? 'sm:gap-4 md:gap-6 lg:gap-[6rem] xl:gap-[5rem] 2xl:gap-[15rem]' : 'sm:gap-14 md:gap-16 lg:gap-[8rem] xl:gap-[7rem] 2xl:gap-[17rem]'} flex flex-col sm:flex-row`}>
+                    <div className='flex w-max gap-2 items-center py-1'>
                       <Link to={`/channel/${Video.owner._id}`}>
-                        <h1 className='text-[0.9rem] font-bold'>{Video.owner.channel_name}</h1>
+                        <div className='w-max flex'>
+                          <img src={Video.owner.avatar} alt="avatar" className='w-[2rem] md:w-[2.5rem] h-[2rem] md:h-[2.5rem] rounded-full object-cover' />
+                        </div>
                       </Link>
-                      <h1 className='text-[0.8rem] font-medium -mt-1'>{SubscriberCount} subscribers</h1>
-                    </div>
-                    <div className='ml-6'>
-                      <button className={`text-white py-2 px-6 text-[0.8rem] rounded-[20px] font-bold ${Subscribe ? 'bg-slate-600 font-semibold' : 'bg-black'}`} onClick={SubscribeToggle}>{isLoggedin && Subscribe ? 'Unsubscribed' : 'Subscribed'}</button>
-                    </div>
-                  </div>
-                  <div className='flex items-center justify-center text-center gap-3'>
-                    <div className='bg-gray-300 flex items-center rounded-full overflow-hidden'>
-                      <div className='flex items-center gap-1 hover:bg-gray-400 py-2 px-4 cursor-pointer duration-300 transition' onClick={ToggleLike}>
-                        <FaThumbsUp className={`${LikeColorHandle ? 'text-black' : 'text-zinc-500 '}`} />
-                        <h1>{likecount}</h1>
+                      <div className='flex flex-col'>
+                        <Link to={`/channel/${Video.owner._id}`}>
+                          <h1 className='text-[.8rem] md:text-[0.9rem] font-bold'>{Video.owner.channel_name}</h1>
+                        </Link>
+                        <h1 className='text-[.7rem] md:text-[0.8rem] font-medium -mt-1'>{SubscriberCount} subscribers</h1>
                       </div>
-                      <hr className='w-[1px] h-[25px] bg-gray-800 rounded-full' />
-                      <div className='hover:bg-gray-400 py-3 px-4 cursor-pointer duration-300 transition' onClick={() => setDisLikeColorHandle(!DisLikeColorHandle)}>
-                        <FaThumbsDown className={`${DisLikeColorHandle ? 'text-black' : 'text-zinc-500 '}`} />
+                      <div className='ml-[6rem] sm:ml-0 lg:ml-6'>
+                        <button className={`text-white py-2 px-4 md:px-6 text-[.7rem] md:text-[0.8rem] rounded-[20px] font-bold ${Subscribe ? 'bg-slate-600 font-semibold' : 'bg-black'}`} onClick={SubscribeToggle}>{isLoggedin && Subscribe ? 'Unsubscribed' : 'Subscribed'}</button>
                       </div>
                     </div>
-                    <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-4 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer'
-                      onClick={() => {
-                        if (!isLoggedin) {
-                          toast.error('Login is Required')
-                        } else {
-                          setsawplaylist(true)
-                        }
-                      }}>
-                      <FaBookmark className='text-zinc-500' />
-                      <h1>Save</h1>
-                    </div>
-                    <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-4 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer' onClick={ShareHandler}>
-                      <FaShareAlt className='text-zinc-500' />
-                      <h1>Share</h1>
-                    </div>
-                    {
-                      CheckUser
-                        ? <div className='bg-gray-300 flex items-center rounded-full overflow-hidden px-2 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer' onClick={() => setsawoption(true)}>
-                          <HiOutlineDotsVertical className='text-[1.2rem] text-zinc-500' />
+                    <div className='mt-4 sm:mt-0 flex items-center sm:justify-center text-center gap-2 sm:gap-1 md:gap-3'>
+                      <div className='bg-gray-300 flex items-center rounded-full overflow-hidden'>
+                        <div className='text-[.9rem] sm:text-base flex items-center gap-1 hover:bg-gray-400 py-2 px-4 cursor-pointer duration-300 transition' onClick={ToggleLike}>
+                          <FaThumbsUp className={`${LikeColorHandle ? 'text-black' : 'text-zinc-500 '}`} />
+                          <h1>{likecount}</h1>
                         </div>
-                        : <></>
-                    }
-                    {
-                      sawoption
-                        ? <div ref={dropdownRef} className='absolute bg-white ml-[14rem] mt-[5rem] shadow-lg'>
-                          <h1 className='cursor-pointer p-1 hover:bg-gray-200 duration-300 font-semibold' onClick={DeleteVideo}>Delete Video</h1>
-                          <hr className='w-[8rem] h-[2px] bg-black' />
-                          <Link to={`/updatevideo/${id}`}>
-                            <h1 className='cursor-pointer p-1 hover:bg-gray-200 duration-300 font-semibold'>Manage Video</h1>
-                          </Link>
+                        <hr className='w-[1px] h-[25px] bg-gray-800 rounded-full' />
+                        <div className='text-[.9rem] sm:text-base hover:bg-gray-400 py-3 px-4 cursor-pointer duration-300 transition' onClick={() => setDisLikeColorHandle(!DisLikeColorHandle)}>
+                          <FaThumbsDown className={`${DisLikeColorHandle ? 'text-black' : 'text-zinc-500 '}`} />
                         </div>
-                        : <></>
-                    }
+                      </div>
+                      <div className='text-[.9rem] sm:text-base bg-gray-300 flex items-center rounded-full overflow-hidden px-4 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer'
+                        onClick={() => {
+                          if (!isLoggedin) {
+                            toast.error('Login is Required')
+                          } else {
+                            setsawplaylist(true)
+                          }
+                        }}>
+                        <FaBookmark className='text-zinc-500' />
+                        <h1>Save</h1>
+                      </div>
+                      <div className='text-[.9rem] sm:text-base bg-gray-300 flex items-center rounded-full overflow-hidden px-4 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer' onClick={ShareHandler}>
+                        <FaShareAlt className='text-zinc-500' />
+                        <h1>Share</h1>
+                      </div>
+                      {
+                        CheckUser
+                          ? <div className='text-[.9rem] sm:text-base bg-gray-300 flex items-center rounded-full overflow-hidden px-2 py-2 hover:bg-gray-400 duration-300 transition gap-1 cursor-pointer' onClick={() => setsawoption(true)}>
+                            <HiOutlineDotsVertical className='text-[1.2rem] text-zinc-500' />
+                          </div>
+                          : <></>
+                      }
+                      {
+                        sawoption
+                          ? <div ref={dropdownRef} className='absolute bg-white ml-[14rem] mt-[5rem] shadow-lg'>
+                            <h1 className='cursor-pointer p-1 hover:bg-gray-200 duration-300 font-semibold' onClick={DeleteVideo}>Delete Video</h1>
+                            <hr className='w-[8rem] h-[2px] bg-black' />
+                            <Link to={`/updatevideo/${id}`}>
+                              <h1 className='cursor-pointer p-1 hover:bg-gray-200 duration-300 font-semibold'>Manage Video</h1>
+                            </Link>
+                          </div>
+                          : <></>
+                      }
+                    </div>
+                  </div>
+                  <div className='flex flex-col border border-[#F2F2F2] shadow-md rounded-[5px] p-1 px-2 bg-[#F2F2F2] mt-2 w-[20rem] sm:w-[35rem] md:w-[40rem] lg:w-[45rem] xl:w-[45rem] 2xl:w-[55rem]'>
+                    <div className='flex font-semibold gap-2'>
+                      <h1 className='flex text-[0.8rem]'>{Video.views} views</h1>
+                      <h1 className='text-[0.8rem]'>{timeAgo}</h1>
+                    </div>
+                    <p className='max-w-[20rem] sm:max-w-[35rem] md:max-w-[40rem] lg:max-w-[45rem] xl:max-w-[45rem] 2xl:max-w-[54rem] break-words whitespace-pre-line'>{descriptionToShow}</p>
+                    {!isExpanded && Video.desciption?.length > 100 && (
+                      <span className='cursor-pointer font-semibold' onClick={toggleDescription}>...more</span>   
+                    )}
+                    {isExpanded && Video.desciption?.length > 100 && (
+                      <span className='cursor-pointer font-semibold' onClick={toggleDescription}>Show less</span>
+                    )}
                   </div>
                 </div>
-                <div className='flex flex-col border border-[#F2F2F2] shadow-md rounded-[5px] p-1 px-2 bg-[#F2F2F2] w-[55rem]'>
-                  <div className='flex font-semibold gap-2'>
-                    <h1 className='flex text-[0.8rem]'>{Video.views} views</h1>
-                    <h1 className='text-[0.8rem]'>{timeAgo}</h1>
-                  </div>
-                  <p className='max-w-[54rem] break-words whitespace-pre-line'>{descriptionToShow}</p>
-                  {!isExpanded && Video.desciption?.length > 100 && (
-                    <span className='cursor-pointer font-semibold' onClick={toggleDescription}>...more</span>
-                  )}
-                  {isExpanded && Video.desciption?.length > 100 && (
-                    <span className='cursor-pointer font-semibold' onClick={toggleDescription}>Show less</span>
-                  )}
-                </div>
-              </div>
-            </>
-          ) : (
-            <p className='w-full h-full justify-center flex items-center text-[2rem] font-bold mt-[4rem]'>Loading...</p>
-          )}
-          <Message />
-        </div>
-        <div>
-          <Semi_Videos />
+              </>
+            ) : (
+              <p className='w-full h-full justify-center flex items-center text-[2rem] font-bold mt-[4rem]'>Loading...</p>
+            )}
+            <Message setHideSemi_Videos={setHideSemi_Videos} />
+          </div>
+          <div className={`${HideSemi_Videos ? 'flex' : 'hidden xl:flex'}`}>
+            <Semi_Videos />
+          </div>
         </div>
       </div>
       {
