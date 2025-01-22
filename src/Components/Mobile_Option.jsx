@@ -38,7 +38,7 @@ const Mobile_Option = ({ setsawOption }) => {
     return (
         <>
             <div className='w-full h-full absolute top-0 pt-[4rem] z-50' onClick={()=>setsawOption(false)}>
-                <div className='flex-col h-full items-start pl-2 absolute bg-white pr-4 shadow-2xl'>
+                <div className='flex-col h-full items-start pl-2 absolute bg-white pr-4 shadow-md'>
                     <NavLink
                         to='/'
                         className={({ isActive }) => isActive ? "bg-gray-200 rounded-[10px] overflow-hidden" : "text-gray-800"}
