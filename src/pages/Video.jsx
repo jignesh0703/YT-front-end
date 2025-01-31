@@ -96,6 +96,8 @@ const Video = () => {
           })
           if (responce.data?.isOwner) {
             setCheckUser(true)
+          } else {
+            setCheckUser(false)
           }
         } catch (error) {
         }
@@ -256,6 +258,14 @@ const Video = () => {
   const [HideSemi_Videos, setHideSemi_Videos] = useState(true)
   const [sawOption, setsawOption] = useState(false)
 
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.load(); // Reload the video when Video state changes
+    }
+  }, [Video]);
+
   return (
     <>
       {isLoading && (
@@ -278,7 +288,7 @@ const Video = () => {
                 <div className='ml-8 sm:ml-[3rem] md:ml-[4rem] lg:ml-[2rem] mt-4 xl:ml-[1rem] 2xl:ml-[2rem] 3xl:ml-[10%]'>
                   {
                     Video.videolink && (
-                      <video width="100%" controls className='w-[20rem] sm:w-[35rem] md:w-[40rem] h-[10rem] sm:h-[18rem] md:h-[20rem] lg:w-[45rem] xl:w-[45rem] 2xl:w-[55rem] xl:h-[25rem] 2xl:h-[30rem]'>
+                      <video ref={videoRef} width="100%" controls className='w-[20rem] sm:w-[35rem] md:w-[40rem] h-[10rem] sm:h-[18rem] md:h-[20rem] lg:w-[45rem] xl:w-[45rem] 2xl:w-[55rem] xl:h-[25rem] 2xl:h-[30rem]'>
                         <source src={Video.videolink} type="video/mp4" />
                         <source src={Video.videolink} type="video/webm" />
                         <source src={Video.videolink} type="video/ogg" />
@@ -356,7 +366,7 @@ const Video = () => {
                     </div>
                     <p className='max-w-[20rem] sm:max-w-[35rem] md:max-w-[40rem] lg:max-w-[45rem] xl:max-w-[45rem] 2xl:max-w-[54rem] break-words whitespace-pre-line'>{descriptionToShow}</p>
                     {!isExpanded && Video.desciption?.length > 100 && (
-                      <span className='cursor-pointer font-semibold' onClick={toggleDescription}>...more</span>   
+                      <span className='cursor-pointer font-semibold' onClick={toggleDescription}>...more</span>
                     )}
                     {isExpanded && Video.desciption?.length > 100 && (
                       <span className='cursor-pointer font-semibold' onClick={toggleDescription}>Show less</span>

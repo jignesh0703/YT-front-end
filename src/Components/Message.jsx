@@ -130,7 +130,7 @@ const Message = ({ setHideSemi_Videos }) => {
             }
         }
         FetchCommentCount()
-    }, [tarckcomment])
+    }, [tarckcomment,id])
 
     const [FaThumbsUpLike, setFaThumbsUpLike] = useState({})
 
