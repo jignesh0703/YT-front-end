@@ -151,7 +151,7 @@ const Updata_Profile = () => {
                                         <img src={data.avatar} alt="avatar" className='w-[6rem] sm:w-[8rem] h-[6rem] sm:h-[8rem] rounded-full' />
                                         <div className='flex justify-center'>
                                             <label htmlFor="cover_image" className='text-blue-500 font-bold cursor-pointer border-b-[1.5px] border-blue-500 transition duration-200 text-[.9rem] sm:text-base'>
-                                                Change Avatar
+                                                Change Photo
                                             </label>
                                         </div>
                                         <input type="file" id='cover_image' onChange={ChangeImageAvatar} hidden />

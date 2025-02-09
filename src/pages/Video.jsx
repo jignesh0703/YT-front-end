@@ -63,7 +63,7 @@ const Video = () => {
     setisExpanded(!isExpanded);
   };
 
-  const descriptionToShow = Video ? isExpanded ? Video.desciption : `${Video.desciption?.slice(0, 150)}` : '';
+  const descriptionToShow = Video ? isExpanded ? Video.desciption : `${Video.desciption?.slice(0, 80)}` : '';
 
   //share the URL
   const ShareHandler = () => {
@@ -288,7 +288,7 @@ const Video = () => {
                 <div className='ml-8 sm:ml-[3rem] md:ml-[4rem] lg:ml-[2rem] mt-4 xl:ml-[1rem] 2xl:ml-[2rem] 3xl:ml-[10%]'>
                   {
                     Video.videolink && (
-                      <video ref={videoRef} width="100%" controls className='w-[20rem] sm:w-[35rem] md:w-[40rem] h-[10rem] sm:h-[18rem] md:h-[20rem] lg:w-[45rem] xl:w-[45rem] 2xl:w-[55rem] xl:h-[25rem] 2xl:h-[30rem]'>
+                      <video ref={videoRef} width="100%" controls className='w-[20rem] sm:w-[35rem] md:w-[40rem] h-[10rem] sm:h-[18rem] md:h-[20rem] lg:w-[45rem] xl:w-[45rem] 2xl:w-[55rem] xl:h-[25rem] 2xl:h-[30rem]' autoPlay>
                         <source src={Video.videolink} type="video/mp4" />
                         <source src={Video.videolink} type="video/webm" />
                         <source src={Video.videolink} type="video/ogg" />

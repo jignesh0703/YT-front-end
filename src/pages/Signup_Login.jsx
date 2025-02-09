@@ -151,7 +151,7 @@ const Signup_Login = () => {
                             {
                                 Loginstate === "Sign UP"
                                     ? <div>
-                                        <label htmlFor="avtar_name" className='text-[1.3rem]'>Avatar</label>
+                                        <label htmlFor="avtar_name" className='text-[1.3rem]'>Photo</label>
                                         <label htmlFor="avatar" className='flex justify-center'>
                                             <img
                                                 src={formData.avatar}

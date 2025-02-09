@@ -90,13 +90,11 @@ const Videos = () => {
                                         />
                                     ))
                                 ) : (
-                                    <div className='flex justify-center'>
-                                        <h1 className='text-[2rem] font-bold lg:mr-[11.5rem]'>No Video is available</h1>
-                                    </div>
+                                    <></>
                                 )
                         }
                     </div>
-                    {loading && <p>Loading more videos...</p>}
+                    {loading && <p>Loading videos...</p>}
                 </div>
             </div>
         </>
